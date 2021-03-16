@@ -15,7 +15,7 @@ const sendErrorProd = (error, resp) => {
         });
     } else {
         // logging for ourselves...
-        console.error('ERROR!', err);
+        // console.error('ERROR!', err);
 
         // dont leak the details of programming/unknown error
         resp.status(500).json({

@@ -3,6 +3,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 
+const compression = require('compression');
+
 const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 
@@ -33,6 +35,7 @@ if (process.env.NODE_ENV === 'development') {
 server.use(cors());
 server.use(jwtCheck);
 server.use(express.json());
+server.use(compression());
 
 // routes
 server.use('/api/v1/users', userRouter);

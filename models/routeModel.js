@@ -102,7 +102,6 @@ routeSchema.pre(/^find/, function (next) {
 
 // Middleware .post runs after .create(), doc === created document
 routeSchema.post('save', function (doc, next) {
-    console.log(doc);
     next();
 });
 

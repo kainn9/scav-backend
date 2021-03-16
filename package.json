@@ -7,8 +7,12 @@
     "prettier": "^2.2.1"
   },
   "scripts": {
-    "start": "nodemon server.js",
-    "debug": "ndb server.js"
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "debug": "ndb server.js",
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "name": "backend",
   "version": "1.0.0",
@@ -29,6 +33,7 @@
     "chalk": "^4.1.0",
     "color-convert": "^2.0.1",
     "color-name": "^1.1.4",
+    "compression": "^1.7.4",
     "concat-map": "^0.0.1",
     "cors": "^2.8.5",
     "cross-spawn": "^7.0.3",
@@ -89,6 +94,7 @@
     "natural-compare": "^1.4.0",
     "once": "^1.4.0",
     "optionator": "^0.9.1",
+    "parcel": "^2.0.0-nightly.389",
     "parent-module": "^1.0.1",
     "path": "^0.12.7",
     "path-is-absolute": "^1.0.1",
@@ -122,6 +128,9 @@
     "word-wrap": "^1.2.3",
     "wrappy": "^1.0.2",
     "yallist": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   },
   "author": "",
   "license": "ISC",
