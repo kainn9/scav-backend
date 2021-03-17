@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === 'development') {
 server.use(cors());
 server.use(jwtCheck);
 server.use(express.json());
-server.use(compression());
+// server.use(compression());
 
 // routes
 server.use('/api/v1/users', userRouter);

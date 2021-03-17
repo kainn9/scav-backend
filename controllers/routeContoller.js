@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 
 exports.createRoute = asyncErrorWrapper(async ({ files, body, user }, resp) => {
     // getting user data to pass as creator
-    const emailFromToken = user['https://my.ns/ email'];
+    const emailFromToken = req.user['https://scav-backend.com email'];
     const creator = await User.findOne({ email: emailFromToken });
     const creatorID = creator._id;
     // parse the json part into an object
