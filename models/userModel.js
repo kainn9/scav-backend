@@ -24,10 +24,10 @@ const userSchema = new mongoose.Schema(
     },
 );
 // add populate to queries
-userSchema.pre(/^find/, function (next) {
-    this.populate('routes');
-    next();
-});
+// userSchema.pre('find', function (next) {
+//     this.populate('routes');
+//     next();
+// });
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
