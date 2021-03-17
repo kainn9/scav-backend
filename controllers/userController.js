@@ -1,6 +1,7 @@
 const { isArray } = require('lodash');
 const User = require('../models/userModel');
 const asyncErrorWrapper = require('../services/asyncErrorWrapper');
+const AppError = require('../services/appError');
 
 exports.validateOrCreateUser = asyncErrorWrapper(async (req, resp, next) => {
     const emailFromToken = req.user['https://scav-backend.com email'];
@@ -21,13 +22,14 @@ exports.validateOrCreateUser = asyncErrorWrapper(async (req, resp, next) => {
         },
     });
 });
-exports.getUser = asyncErrorWrapper(async ({ params: { email } }, resp, next) => {
+exports.getUser = asyncErrorWrapper(async (req, resp, next) => {
+    const {
+        query: { email },
+    } = req;
     // waits on promise, returns 1 sale from url/mongo id
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email }).populate('routes');
 
     if (!user) {
-        // populate routes id array(hopefully it works)
-        user.populate('routes');
         // return to avoid running code below
         return next(new AppError(`No email matched with (${email})`, 404));
     }

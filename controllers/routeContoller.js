@@ -2,7 +2,7 @@ const Route = require('../models/routeModel');
 const asyncErrorWrapper = require('../services/asyncErrorWrapper');
 const ApiInterface = require('../services/apiInterface');
 const User = require('../models/userModel');
-
+const AppError = require('../services/appError');
 exports.createRoute = asyncErrorWrapper(async ({ files, body, user }, resp) => {
     // getting user data to pass as creator
     const emailFromToken = user['https://scav-backend.com email'];

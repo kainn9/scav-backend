@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const { validateOrCreateUser, getUser } = require('../controllers/userController');
-router.route('/users').get(getUser);
+router.route('/email').get(getUser);
 router.route('/validate').get(validateOrCreateUser);
 
 module.exports = router;
