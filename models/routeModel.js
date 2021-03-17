@@ -18,7 +18,7 @@ const routeSchema = new mongoose.Schema(
                     title: String,
                     text: String,
                     img: { url: String, key: String },
-                    soundMeda: String,
+                    soundMedia: String,
                     lat: Number,
                     lng: Number,
                     key: String,
