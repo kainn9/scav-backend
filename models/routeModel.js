@@ -50,20 +50,19 @@ const routeSchema = new mongoose.Schema(
                 },
             },
         },
-        locations: [
-            {
-                type: {
-                    type: String,
-                    default: 'Point',
-                    enum: ['Point'],
-                },
-                coordinates: [Number],
-            },
-        ],
         creator: {
             type: mongoose.Schema.ObjectId,
             ref: 'User',
             required: [true, 'route must have creator'],
+        },
+        startLocation: {
+            // GeoJSON
+            type: {
+                type: String,
+                default: 'Point',
+                enum: ['Point'],
+            },
+            coordinates: [Number],
         },
     },
     {
@@ -71,11 +70,10 @@ const routeSchema = new mongoose.Schema(
         toObject: { virtuals: true },
     },
 );
-
 // index to search by title
 routeSchema.index({ title: 'text' });
 // index for geo query
-routeSchema.index({ locations: '2dsphere' });
+routeSchema.index({ startLocation: '2dsphere' });
 
 // Middleware .pre runs inbtwn .save() and .create(), this === saved document
 routeSchema.pre('save', function (next) {
@@ -87,10 +85,10 @@ routeSchema.pre('save', function (next) {
     }
 
     // set location data
-    this.locations = {
-        type: 'Point',
-        coordinates: [this.nodes[0].lng, this.nodes[0].lat],
-    };
+    // this.locations[0] = {
+    //     type: 'Point',
+    //     coordinates: [this.nodes[0].lng, this.nodes[0].lat],
+    // };
 
     next();
 });

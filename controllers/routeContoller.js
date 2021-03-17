@@ -5,7 +5,7 @@ const User = require('../models/userModel');
 
 exports.createRoute = asyncErrorWrapper(async ({ files, body, user }, resp) => {
     // getting user data to pass as creator
-    const emailFromToken = req.user['https://scav-backend.com email'];
+    const emailFromToken = user['https://scav-backend.com email'];
     const creator = await User.findOne({ email: emailFromToken });
     const creatorID = creator._id;
     // parse the json part into an object
@@ -25,6 +25,7 @@ exports.createRoute = asyncErrorWrapper(async ({ files, body, user }, resp) => {
         title: routeJsonData[0].title,
         nodes: routeJsonData,
         creator: creatorID,
+        startLocation: { coordinates: [routeJsonData[0].lng, routeJsonData[0].lat] },
     });
     // add creator ref if route is saved
     creator.routes.push(newRoute);
@@ -75,7 +76,7 @@ exports.queryByRadius = asyncErrorWrapper(async ({ params }, resp) => {
     const radius = distance / 3963.2; // convert to radius units which is dist / radius of the earth(in miles it is: 3963.2)
 
     if (!lat || !lat) new AppError('lat/lng is missing', 400);
-    const routes = await Route.find({ locations: { $geoWithin: { $centerSphere: [[lng, lat], radius] } } });
+    const routes = await Route.find({ startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } } });
 
     resp.status(200).json({
         status: 'success',

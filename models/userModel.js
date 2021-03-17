@@ -1,22 +1,28 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: [true, 'email required'],
-        unique: true,
-        lowercase: true,
-        validate: [validator.isEmail, 'email invalid'],
-    },
-
-    routes: [
-        {
-            type: mongoose.Schema.ObjectId,
-            ref: 'Routes',
+const userSchema = new mongoose.Schema(
+    {
+        email: {
+            type: String,
+            required: [true, 'email required'],
+            unique: true,
+            lowercase: true,
+            validate: [validator.isEmail, 'email invalid'],
         },
-    ],
-});
+
+        routes: [
+            {
+                type: mongoose.Schema.ObjectId,
+                ref: 'Routes',
+            },
+        ],
+    },
+    {
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
+    },
+);
 
 const User = mongoose.model('User', userSchema);
 
