@@ -20,7 +20,7 @@ const sendErrorProd = (error, resp) => {
         // dont leak the details of programming/unknown error
         resp.status(500).json({
             status: 'error',
-            message: 'its all gone to shite run while you can...',
+            message: 'Sorry Server is Down!!!',
         });
     }
 };
