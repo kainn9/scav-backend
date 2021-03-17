@@ -84,12 +84,6 @@ routeSchema.pre('save', function (next) {
         node.key = node['_id'];
     }
 
-    // set location data
-    // this.locations[0] = {
-    //     type: 'Point',
-    //     coordinates: [this.nodes[0].lng, this.nodes[0].lat],
-    // };
-
     next();
 });
 // add populate to queries

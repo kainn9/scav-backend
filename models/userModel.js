@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema(
         toObject: { virtuals: true },
     },
 );
-
+// add populate to queries
+userSchema.pre(/^find/, function (next) {
+    this.populate('routes');
+    next();
+});
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
