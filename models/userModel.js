@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
         routes: [
             {
                 type: mongoose.Schema.ObjectId,
-                ref: 'Routes',
+                ref: 'Route',
             },
         ],
     },
