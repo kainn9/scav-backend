@@ -58,7 +58,7 @@ exports.getRoute = asyncErrorWrapper(async ({ params: { id } }, resp, next) => {
 
     if (!route) {
         // return to avoid running code below
-        return next(new AppError(`No route matched with ID(${id})`, 404));
+        next(new AppError(`No route matched with ID(${id})`, 404));
     }
     // otherwise return JSON
     resp.status(200).json({
@@ -70,12 +70,12 @@ exports.getRoute = asyncErrorWrapper(async ({ params: { id } }, resp, next) => {
 });
 
 // '/routes/radius/:distance/center/:point' <-route layout
-exports.queryByRadius = asyncErrorWrapper(async ({ params }, resp) => {
+exports.queryByRadius = asyncErrorWrapper(async ({ params }, resp, next) => {
     const { distance, point } = params;
     const [lat, lng] = point.split(',');
     const radius = distance / 3963.2; // convert to radius units which is dist / radius of the earth(in miles it is: 3963.2)
 
-    if (!lat || !lat) new AppError('lat/lng is missing', 400);
+    if (!lat || !lat) next(new AppError('lat/lng is missing', 400));
     const routes = await Route.find({ startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } } });
 
     resp.status(200).json({

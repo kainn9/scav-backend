@@ -17,6 +17,12 @@ const userSchema = new mongoose.Schema(
                 ref: 'Route',
             },
         ],
+        likes: [
+            {
+                type: mongoose.Schema.ObjectId,
+                ref: 'Route',
+            },
+        ],
     },
     {
         toJSON: { virtuals: true },

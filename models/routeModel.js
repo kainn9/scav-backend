@@ -64,6 +64,15 @@ const routeSchema = new mongoose.Schema(
             },
             coordinates: [Number],
         },
+        userLikeCount: {
+            type: Number,
+        },
+        userLikes: [
+            {
+                type: mongoose.Schema.ObjectId,
+                ref: 'User',
+            },
+        ],
     },
     {
         toJSON: { virtuals: true },
