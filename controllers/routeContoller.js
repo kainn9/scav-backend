@@ -54,7 +54,7 @@ exports.getAllRoutes = asyncErrorWrapper(async ({ query }, resp) => {
 
 exports.getRoute = asyncErrorWrapper(async ({ params: { id } }, resp, next) => {
     // waits on promise, returns 1 sale from url/mongo id
-    const route = await Route.findById(id);
+    const route = await Route.findById(id).select('-userLikes');
 
     if (!route) {
         // return to avoid running code below
@@ -76,7 +76,9 @@ exports.queryByRadius = asyncErrorWrapper(async ({ params }, resp, next) => {
     const radius = distance / 3963.2; // convert to radius units which is dist / radius of the earth(in miles it is: 3963.2)
 
     if (!lat || !lat) next(new AppError('lat/lng is missing', 400));
-    const routes = await Route.find({ startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } } });
+    const routes = await Route.find({ startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } } }).select(
+        '-userLikes',
+    );
 
     resp.status(200).json({
         status: 'success',
