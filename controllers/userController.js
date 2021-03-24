@@ -30,7 +30,7 @@ exports.getUser = asyncErrorWrapper(async (req, resp, next) => {
         query: { email },
     } = req;
     // waits on promise, returns 1 sale from url/mongo id
-    const user = await User.findOne({ email: email }).populate('routes');
+    const user = await User.findOne({ email: email }).populate('routes').populate('likes');
 
     if (!user) {
         // return to avoid running code below
